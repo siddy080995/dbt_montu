@@ -7,15 +7,13 @@
     Try changing "table" to "view" below
 */
 
-{{ config(materialized='table') }}
-
 {{ config(
     materialized='table'
 ) }}
 
 with source_data as (
     select * 
-    from {{ source('ga4_obfuscated_sample_ecommerce', 'events_20210131') }}
+    from {{ ref('base_sessions') }}
 ),
 
 -- Total users

@@ -19,10 +19,8 @@ sessions as (
         user_first_touch_timestamp,
         geo.country,
         geo.region,
-        geo.city,
-        traffic_source.medium,
-        traffic_source.source,
-        traffic_source.name as campaign
+        geo.city
+
     from
         source_data
 )
