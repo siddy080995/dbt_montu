@@ -1,0 +1,57 @@
+version: 2
+
+sources:
+  - name: ga4_obfuscated_sample_ecommerce
+    database: bigquery-public-data
+    schema: ga4_obfuscated_sample_ecommerce
+    tables:
+      - name: events_20210131
+        description: "GA4 obfuscated sample ecommerce events table for January 31, 2021"
+        columns:
+          - name: event_date
+            description: "The date of the event"
+          - name: event_timestamp
+            description: "The timestamp of the event"
+          - name: event_name
+            description: "The name of the event"
+          - name: event_params
+            description: "The parameters associated with the event"
+          - name: event_previous_timestamp
+            description: "The timestamp of the previous event"
+          - name: event_value_in_usd
+            description: "The value of the event in USD"
+          - name: event_bundle_sequence_id
+            description: "The sequence ID of the event bundle"
+          - name: event_server_timestamp_offset
+            description: "The offset of the server timestamp"
+          - name: user_id
+            description: "The ID of the user"
+          - name: user_pseudo_id
+            description: "The pseudonymous ID of the user"
+          - name: privacy_info
+            description: "Privacy-related information"
+          - name: user_properties
+            description: "Properties associated with the user"
+          - name: user_first_touch_timestamp
+            description: "The timestamp of the user's first touch"
+          - name: user_ltv
+            description: "The lifetime value of the user"
+          - name: device
+            description: "Information about the device used"
+          - name: geo
+            description: "Geographic information"
+          - name: app_info
+            description: "Information about the app"
+          - name: traffic_source
+            description: "Information about the traffic source"
+          - name: stream_id
+            description: "The ID of the stream"
+          - name: platform
+            description: "The platform of the event"
+          - name: event_dimensions
+            description: "Dimensions of the event"
+          - name: ecommerce
+            description: "E-commerce related information"
+          - name: items
+            description: "Item related information including id, brand, and other details"
+
