@@ -1,0 +1,43 @@
+version: 2
+
+models:
+  - name: country_count
+    description: "Aggregated metrics by date, country, name, and device category."
+    columns:
+      - name: event_date
+        description: "The date of the event."
+        tests:
+          - not_null
+          - unique
+      - name: country
+        description: "The country from which the event was recorded."
+        tests:
+          - not_null
+      - name: name
+        description: "The name (replacing campaign) associated with the event."
+        tests:
+          - not_null
+      - name: device_category
+        description: "The device category used during the event."
+        tests:
+          - not_null
+      - name: total_sessions
+        description: "The total number of sessions."
+        tests:
+          - not_null
+      - name: total_users
+        description: "The total number of users."
+        tests:
+          - not_null
+      - name: total_new_users
+        description: "The total number of new users (first visit)."
+        tests:
+          - not_null
+      - name: total_page_views
+        description: "The total number of page views."
+        tests:
+          - not_null
+      - name: total_sessions_with_search
+        description: "The total number of sessions with a search event."
+        tests:
+          - not_null

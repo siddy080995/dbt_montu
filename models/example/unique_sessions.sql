@@ -1,13 +1,16 @@
 -- models/example/unique_sessions.sql
 {{ config(
-    materialized='table'
+  materialized='table',
+  cluster_by=['session_id']
 ) }}
+
 
 with source_data as (
     select 
         event_date,
-        event_timestamp,
-        event_name,
+         event_timestamp,
+        event_previous_timestamp,
+        cast(event_name AS STRING) AS event_name,
         user_pseudo_id,
         user_first_touch_timestamp,
         device.category as device_category,
@@ -27,6 +30,7 @@ select
     user_pseudo_id,
     event_date,
     event_timestamp,
+    event_previous_timestamp,
     event_name,
     user_first_touch_timestamp,
     device_category,

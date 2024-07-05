@@ -1,0 +1,86 @@
+version: 2
+
+models:
+  - name: detailed_count
+    description: "Analysis of user sessions with various metrics"
+    columns:
+      - name: year
+        description: "Year of the event"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["2021"]
+      - name: month
+        description: "Month of the event"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["1"]
+      - name: day
+        description: "Day of the event"
+        tests:
+          - not_null
+          - accepted_values:
+              values: ["31"]
+      - name: event_date
+        description: "Date of the event"
+        tests:
+          - not_null
+      - name: device_category
+        description: "Category of the device used"
+        tests:
+          - not_null
+      - name: country
+        description: "Country of the user"
+        tests:
+          - not_null
+      - name: region
+        description: "Region of the user"
+        tests:
+          - not_null
+      - name: city
+        description: "City of the user"
+        tests:
+          - not_null
+      - name: medium
+        description: "Medium of the traffic source"
+        tests:
+          - not_null
+      - name: source
+        description: "Source of the traffic"
+        tests:
+          - not_null
+      - name: name
+        description: "Name of the traffic source (replaced campaign)"
+        tests:
+          - not_null
+      - name: total_sessions
+        description: "Total number of sessions"
+        tests:
+          - not_null
+          - greater_than:
+              value: 0
+      - name: total_users
+        description: "Total number of users"
+        tests:
+          - not_null
+          - greater_than:
+              value: 0
+      - name: total_new_users
+        description: "Total number of new users (first visit)"
+        tests:
+          - not_null
+          - greater_than_equal_to:
+              value: 0
+      - name: total_page_views
+        description: "Total number of page views"
+        tests:
+          - not_null
+          - greater_than_equal_to:
+              value: 0
+      - name: total_sessions_with_search
+        description: "Total number of sessions with search"
+        tests:
+          - not_null
+          - greater_than_equal_to:
+              value: 0

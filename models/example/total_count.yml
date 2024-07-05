@@ -33,7 +33,7 @@ models:
       - name: campaign
         description: "Traffic source campaign."
 
-  - name: test1
+  - name: total_count
     description: "Aggregated session-level metrics including total sessions, users, new users, page views, sessions with search, and average session duration."
     columns:
       - name: event_date
