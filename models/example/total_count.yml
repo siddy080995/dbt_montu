@@ -1,0 +1,75 @@
+version: 2
+
+models:
+  - name: unique_sessions
+    description: "Base table with session-level details extracted from the GA4 obfuscated sample ecommerce events."
+    columns:
+      - name: session_id
+        description: "Unique identifier for each session, concatenation of user_pseudo_id and event_timestamp."
+      - name: user_pseudo_id
+        description: "Pseudonymous ID of the user."
+      - name: event_date
+        description: "The date of the event."
+      - name: event_timestamp
+        description: "The timestamp of the event."
+      - name: event_name
+        description: "The name of the event."
+      - name: event_server_timestamp_offset
+        description: "The offset of the server timestamp."
+      - name: user_first_touch_timestamp
+        description: "The timestamp of the user's first touch."
+      - name: device_category
+        description: "Category of the device used."
+      - name: country
+        description: "Country of the user."
+      - name: region
+        description: "Region of the user."
+      - name: city
+        description: "City of the user."
+      - name: medium
+        description: "Traffic source medium."
+      - name: source
+        description: "Traffic source."
+      - name: campaign
+        description: "Traffic source campaign."
+
+  - name: total_count
+    description: "Aggregated session-level metrics including total sessions, users, new users, page views, sessions with search, and average session duration."
+    columns:
+      - name: event_date
+        description: "The date of the event."
+      - name: device_category
+        description: "Category of the device used."
+      - name: country
+        description: "Country of the user."
+      - name: region
+        description: "Region of the user."
+      - name: city
+        description: "City of the user."
+      - name: medium
+        description: "Traffic source medium."
+      - name: source
+        description: "Traffic source."
+      - name: campaign
+        description: "Traffic source campaign."
+      - name: total_sessions
+        description: "Total number of sessions."
+        tests:
+          - not_null
+      - name: total_users
+        description: "Total number of users."
+        tests:
+          - not_null
+      - name: total_new_users
+        description: "Total number of new users."
+        tests:
+          - not_null
+      - name: total_page_views
+        description: "Total number of page views."
+        tests:
+          - not_null
+      - name: total_sessions_with_search
+        description: "Total sessions with search."
+        tests:
+          - not_null
+
