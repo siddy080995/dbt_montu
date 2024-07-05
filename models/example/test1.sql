@@ -13,7 +13,7 @@
 
 with source_data as (
     select * 
-    from {{ ref('base_sessions') }}
+    from {{ ref('unique_sessions') }}
 ),
 
 -- Total users

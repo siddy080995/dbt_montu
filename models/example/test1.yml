@@ -1,7 +1,7 @@
 version: 2
 
 models:
-  - name: base_sessions
+  - name: unique_sessions
     description: "Base table with session-level details extracted from the GA4 obfuscated sample ecommerce events."
     columns:
       - name: session_id

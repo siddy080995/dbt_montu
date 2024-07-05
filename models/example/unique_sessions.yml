@@ -8,6 +8,11 @@ sources:
       - name: events_20210131
         description: "GA4 obfuscated sample ecommerce events table for January 31, 2021"
         columns:
+          - name: session_id
+            description: "Unique identifier for each session, concatenation of user_pseudo_id and event_timestamp."
+            tests:
+              - unique
+              - not_null
           - name: event_date
             description: "The date of the event"
           - name: event_timestamp
