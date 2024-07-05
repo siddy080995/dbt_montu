@@ -54,13 +54,22 @@ models:
         description: "Traffic source campaign."
       - name: total_sessions
         description: "Total number of sessions."
+        tests:
+          - not_null
       - name: total_users
         description: "Total number of users."
+        tests:
+          - not_null
       - name: total_new_users
         description: "Total number of new users."
+        tests:
+          - not_null
       - name: total_page_views
         description: "Total number of page views."
+        tests:
+          - not_null
       - name: total_sessions_with_search
-        description: "Total number of sessions with search."
-      - name: session_avg_duration
-        description: "Average duration of sessions."
+        description: "Total sessions with search."
+        tests:
+          - not_null
+
