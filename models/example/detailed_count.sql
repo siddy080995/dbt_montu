@@ -22,7 +22,7 @@ with source_data as (
         medium,
         source,
         name  -- Replaced 'campaign' with 'name'
-    from {{ ref('unique_sessions') }}
+    from {{ ref('staging_sessions') }}
 ),
 
 -- aggregated data
@@ -41,7 +41,7 @@ aggregated_data as (
         name,
         count(distinct concat(user_pseudo_id, cast(event_timestamp as string))) as total_sessions,
         count(distinct user_pseudo_id) as total_users,
-        count(distinct if(user_first_touch_timestamp = event_timestamp, user_pseudo_id, null)) as total_new_users,
+        count(distinct if(TIMESTAMP_MICROS(user_first_touch_timestamp) = TIMESTAMP_MICROS(event_timestamp), user_pseudo_id, null)) as total_new_users,
         count(if(CAST(event_name AS STRING) = 'page_view', 1, null)) as total_page_views,
         count(if(CAST(event_name AS STRING) = 'view_search_results', 1, null)) as total_sessions_with_search
     from source_data

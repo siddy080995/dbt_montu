@@ -8,7 +8,7 @@
 -- getting source data
 with source_data as (
     select
-        event_date,
+        PARSE_DATE('%Y%m%d', event_date) as event_date,
         event_timestamp,
         user_first_touch_timestamp,
         event_previous_timestamp,
@@ -17,7 +17,7 @@ with source_data as (
         device_category,
         country,
         name  
-    from {{ ref('unique_sessions') }}
+    from {{ ref('staging_sessions') }}
 ),
 
 -- total sessions
@@ -44,7 +44,7 @@ total_new_users as (
         event_date,
         count(distinct user_pseudo_id) as total_new_users
     from source_data
-    where user_first_touch_timestamp = event_timestamp
+    where TIMESTAMP_MICROS(user_first_touch_timestamp) = TIMESTAMP_MICROS(event_timestamp)
     group by event_date
 ),
 
