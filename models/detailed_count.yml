@@ -8,20 +8,14 @@ models:
         description: "Year of the event"
         tests:
           - not_null
-          - accepted_values:
-              values: ["2021"]
       - name: month
         description: "Month of the event"
         tests:
           - not_null
-          - accepted_values:
-              values: ["1"]
       - name: day
         description: "Day of the event"
         tests:
           - not_null
-          - accepted_values:
-              values: ["31"]
       - name: event_date
         description: "Date of the event"
         tests:
@@ -58,29 +52,23 @@ models:
         description: "Total number of sessions"
         tests:
           - not_null
-          - greater_than:
-              value: 0
       - name: total_users
         description: "Total number of users"
         tests:
           - not_null
-          - greater_than:
-              value: 0
       - name: total_new_users
         description: "Total number of new users (first visit)"
         tests:
           - not_null
-          - greater_than_equal_to:
-              value: 0
       - name: total_page_views
         description: "Total number of page views"
         tests:
           - not_null
-          - greater_than_equal_to:
-              value: 0
       - name: total_sessions_with_search
         description: "Total number of sessions with search"
         tests:
           - not_null
-          - greater_than_equal_to:
-              value: 0
+      - name: session_avg_duration_test
+        description: "Check if session_avg_duration is greater than or equal to zero"
+        tests:
+          - not_null

@@ -5,6 +5,7 @@
 ) }}
 
 
+
 with source_data as (
     select 
         event_date,
@@ -41,3 +42,5 @@ select
     source,
     name
 from source_data
+
+
