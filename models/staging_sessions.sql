@@ -1,4 +1,4 @@
--- models/example/unique_sessions.sql
+
 {{ config(
   materialized='table',
   cluster_by=['session_id']
@@ -21,8 +21,7 @@ with source_data as (
         traffic_source.medium,
         traffic_source.source,
         traffic_source.name,
-        -- Derive session_id by concatenating user_pseudo_id and event_timestamp
-        concat(user_pseudo_id, cast(event_timestamp as string)) as session_id
+        concat(user_pseudo_id, cast(event_timestamp as string)) as session_id  -- unique key session_id by concatenating user_pseudo_id and event_timestamp
     from {{ source('ga4_obfuscated_sample_ecommerce', 'events_20210131') }}
 )
 

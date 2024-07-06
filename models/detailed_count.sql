@@ -6,6 +6,7 @@
 -- source data input
 with source_data as (
     select
+        session_id,
         PARSE_DATE('%Y%m%d', event_date) as event_date,
         EXTRACT(YEAR FROM PARSE_DATE('%Y%m%d', event_date)) as year,
         EXTRACT(MONTH FROM PARSE_DATE('%Y%m%d', event_date)) as month,
@@ -37,10 +38,10 @@ session_durations as (
 -- aggregated data
 aggregated_data as (
     select
+        src.event_date,
         src.year,
         src.month,
         src.day,
-        src.event_date,
         src.device_category,
         src.country,
         src.region,
@@ -48,7 +49,7 @@ aggregated_data as (
         src.medium,
         src.source,
         src.name,
-        count(distinct concat(src.user_pseudo_id, cast(src.event_timestamp as string))) as total_sessions,
+        count(distinct (session_id)) as total_sessions,
         count(distinct src.user_pseudo_id) as total_users,
         count(distinct if(TIMESTAMP_MICROS(src.user_first_touch_timestamp) = TIMESTAMP_MICROS(src.event_timestamp), src.user_pseudo_id, null)) as total_new_users,
         count(if(CAST(src.event_name AS STRING) = 'page_view', 1, null)) as total_page_views,
