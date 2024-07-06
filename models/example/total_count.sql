@@ -68,6 +68,24 @@ search_sessions as (
     group by event_date
 )
 
+,-- session durations
+session_durations as (
+    select
+        event_date,
+        user_pseudo_id,
+        TIMESTAMP_DIFF(MAX(TIMESTAMP_MICROS(event_timestamp)), MIN(TIMESTAMP_MICROS(event_timestamp)), SECOND) AS session_duration
+    from source_data
+    group by event_date, user_pseudo_id
+),
+
+-- average session duration
+average_session_duration as (
+    select
+        event_date,
+        AVG(session_duration) as session_avg_duration
+    from session_durations
+    group by event_date
+)
 -- Final select to aggregate all metrics by date
 select
     ts.event_date,
@@ -75,10 +93,12 @@ select
     tu.total_users,
     tnu.total_new_users,
     tpv.total_page_views,
-    ss.total_sessions_with_search
+    ss.total_sessions_with_search,
+    sd.session_avg_duration
 from total_sessions ts
 left join total_users tu on ts.event_date = tu.event_date
 left join total_new_users tnu on ts.event_date = tnu.event_date
 left join total_page_views tpv on ts.event_date = tpv.event_date
 left join search_sessions ss on ts.event_date = ss.event_date
+left join average_session_duration sd on ts.event_date = sd.event_date
 

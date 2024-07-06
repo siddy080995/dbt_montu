@@ -82,7 +82,30 @@ search_sessions as (
     where CAST(event_name AS STRING) = 'view_search_results'
     group by event_date, country, name, device_category
 )
+,-- session durations
+session_durations as (
+    select
+        event_date,
+        country,
+        name,
+        device_category,
+        user_pseudo_id,
+        TIMESTAMP_DIFF(MAX(TIMESTAMP_MICROS(event_timestamp)), MIN(TIMESTAMP_MICROS(event_timestamp)), SECOND) AS session_duration
+    from source_data
+    group by event_date, user_pseudo_id, country, name, device_category
+),
 
+-- average session duration
+average_session_duration as (
+    select
+        event_date,
+        country,
+        name,
+        device_category,
+        AVG(session_duration) as session_avg_duration
+    from session_durations
+    group by event_date, country, name, device_category
+)
 -- Final select to aggregate all metrics by date, country, name and device category
 select
     ts.event_date,
@@ -93,7 +116,8 @@ select
     COALESCE(tu.total_users, 0) as total_users,
     COALESCE(tnu.total_new_users, 0) as total_new_users,
     COALESCE(tpv.total_page_views, 0) as total_page_views,
-    COALESCE(ss.total_sessions_with_search, 0) as total_sessions_with_search
+    COALESCE(ss.total_sessions_with_search, 0) as total_sessions_with_search,
+    COALESCE(sd.session_avg_duration, 0) as session_avg_duration
 from total_sessions ts
 left join total_users tu on ts.event_date = tu.event_date
     and ts.country = tu.country
@@ -111,3 +135,7 @@ left join search_sessions ss on ts.event_date = ss.event_date
     and ts.country = ss.country
     and ts.name = ss.name
     and ts.device_category = ss.device_category
+left join average_session_duration sd on ts.event_date = sd.event_date
+    and ts.country = sd.country
+    and ts.name = sd.name
+    and ts.device_category = sd.device_category

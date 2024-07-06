@@ -25,26 +25,37 @@ with source_data as (
     from {{ ref('staging_sessions') }}
 ),
 
+session_durations as (
+    select
+        event_date,
+        user_pseudo_id,
+        TIMESTAMP_DIFF(MAX(TIMESTAMP_MICROS(event_timestamp)), MIN(TIMESTAMP_MICROS(event_timestamp)), SECOND) AS session_duration
+    from source_data
+    group by event_date, user_pseudo_id
+),
+
 -- aggregated data
 aggregated_data as (
     select
-        year,
-        month,
-        day,
-        event_date,
-        device_category,
-        country,
-        region,
-        city,
-        medium,
-        source,
-        name,
-        count(distinct concat(user_pseudo_id, cast(event_timestamp as string))) as total_sessions,
-        count(distinct user_pseudo_id) as total_users,
-        count(distinct if(TIMESTAMP_MICROS(user_first_touch_timestamp) = TIMESTAMP_MICROS(event_timestamp), user_pseudo_id, null)) as total_new_users,
-        count(if(CAST(event_name AS STRING) = 'page_view', 1, null)) as total_page_views,
-        count(if(CAST(event_name AS STRING) = 'view_search_results', 1, null)) as total_sessions_with_search
-    from source_data
+        src.year,
+        src.month,
+        src.day,
+        src.event_date,
+        src.device_category,
+        src.country,
+        src.region,
+        src.city,
+        src.medium,
+        src.source,
+        src.name,
+        count(distinct concat(src.user_pseudo_id, cast(src.event_timestamp as string))) as total_sessions,
+        count(distinct src.user_pseudo_id) as total_users,
+        count(distinct if(TIMESTAMP_MICROS(src.user_first_touch_timestamp) = TIMESTAMP_MICROS(src.event_timestamp), src.user_pseudo_id, null)) as total_new_users,
+        count(if(CAST(src.event_name AS STRING) = 'page_view', 1, null)) as total_page_views,
+        count(if(CAST(src.event_name AS STRING) = 'view_search_results', 1, null)) as total_sessions_with_search,
+        AVG(sd.session_duration) as session_avg_duration
+    from source_data src
+    left join session_durations sd on sd.event_date = src.event_date and sd.user_pseudo_id = src.user_pseudo_id
     group by year, month, day, event_date, device_category, country, region, city, medium, source, name
 )
 
@@ -65,5 +76,6 @@ select
     COALESCE(total_users, 0) as total_users,
     COALESCE(total_new_users, 0) as total_new_users,
     COALESCE(total_page_views, 0) as total_page_views,
-    COALESCE(total_sessions_with_search, 0) as total_sessions_with_search
+    COALESCE(total_sessions_with_search, 0) as total_sessions_with_search,
+    COALESCE(session_avg_duration, 0) as session_avg_duration
 from aggregated_data
