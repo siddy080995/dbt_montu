@@ -68,3 +68,7 @@ models:
         description: "Total number of sessions with search"
         tests:
           - not_null
+      - name: session_avg_duration_test
+        description: "Check if session_avg_duration is greater than or equal to zero"
+        tests:
+          - not_null
