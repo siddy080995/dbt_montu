@@ -21,7 +21,7 @@ with source_data as (
         city,
         medium,
         source,
-        name  -- Replaced 'campaign' with 'name'
+        name  
     from {{ ref('staging_sessions') }}
 ),
 
