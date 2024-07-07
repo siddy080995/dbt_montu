@@ -41,3 +41,7 @@ models:
         description: "The total number of sessions with a search event."
         tests:
           - not_null
+      - name: session_avg_duration
+        description: "Average session duration in seconds"
+        tests:
+          - not_null

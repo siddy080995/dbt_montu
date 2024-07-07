@@ -8,6 +8,7 @@
 -- getting source data
 with source_data as (
     select
+        session_id,
         PARSE_DATE('%Y%m%d', event_date) as event_date,
         event_timestamp,
         user_first_touch_timestamp,
@@ -24,7 +25,7 @@ with source_data as (
 total_sessions as (
     select
         event_date,
-        count(distinct concat(user_pseudo_id, cast(event_timestamp as string))) as total_sessions
+        count(distinct (session_id)) as total_sessions
     from source_data
     group by event_date
 ),
