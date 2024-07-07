@@ -80,3 +80,9 @@ select
     COALESCE(total_sessions_with_search, 0) as total_sessions_with_search,
     COALESCE(session_avg_duration, 0) as session_avg_duration
 from aggregated_data
+order by total_sessions desc,
+total_users desc,
+total_page_views desc,
+total_new_users desc,
+total_sessions_with_search desc,
+session_avg_duration desc

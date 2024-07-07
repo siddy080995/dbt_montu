@@ -1,0 +1,19 @@
+select
+  device.category,
+  count(distinct user_pseudo_id) as total_users
+from
+  `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`
+group by
+  device.category
+order by
+  total_users desc
+
+  select
+  event_date,
+  count(distinct user_pseudo_id) as total_users
+from
+  `bigquery-public-data.ga4_obfuscated_sample_ecommerce.events_*`
+group by
+  event_date
+order by
+  total_users desc
