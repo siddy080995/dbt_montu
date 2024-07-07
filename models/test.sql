@@ -24,7 +24,7 @@ with source_data as (
         traffic_source.source,
         traffic_source.name,
         concat(user_pseudo_id, cast(event_timestamp as string)) as session_id  -- unique key session_id by concatenating user_pseudo_id and event_timestamp
-    from {{ source('ga4_obfuscated_sample_ecommerce', 'events_20210131') }}
+    from {{ source('ga4_obfuscated_sample_ecommerce', 'events_*') }}
 )
 
 {% if is_incremental() %}
