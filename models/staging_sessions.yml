@@ -5,8 +5,8 @@ sources:
     database: bigquery-public-data
     schema: ga4_obfuscated_sample_ecommerce
     tables:
-      - name: events_20210131
-        description: "GA4 obfuscated sample ecommerce events table for January 31, 2021"
+      - name: events_*
+        description: The table records the data for 92 days
         columns:
           - name: session_id
             description: "Unique identifier for each session, concatenation of user_pseudo_id and event_timestamp."

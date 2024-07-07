@@ -9,7 +9,7 @@
 with stg_source as (
     select 
     *
-    from {{ source('ga4_obfuscated_sample_ecommerce', 'events_20210131') }}
+    from {{ source('ga4_obfuscated_sample_ecommerce', 'events_*') }}
 ),
 -- select relevant columns from source data
 source_data as (
