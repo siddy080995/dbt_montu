@@ -7,7 +7,7 @@
 with source_data as (
     select
         session_id,
-        PARSE_DATE('%Y%m%d', event_date) as event_date,
+        event_date,
         event_timestamp,
         user_first_touch_timestamp,
         event_previous_timestamp,
