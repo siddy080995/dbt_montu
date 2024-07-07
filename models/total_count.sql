@@ -1,6 +1,4 @@
-
-
--- Define the model configuration
+-- model configuration
 {{ config(
     materialized='table'
 ) }}

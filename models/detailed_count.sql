@@ -25,7 +25,7 @@ with source_data as (
         name  
     from {{ ref('staging_sessions') }}
 ),
-
+-- calculate calculate duration for each unique session
 session_durations as (
     select
         event_date,
@@ -35,7 +35,7 @@ session_durations as (
     group by event_date, user_pseudo_id
 ),
 
--- aggregated data
+-- aggregate data based on metrics asked
 aggregated_data as (
     select
         src.event_date,
