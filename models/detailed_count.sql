@@ -7,10 +7,10 @@
 with source_data as (
     select
         session_id,
-        PARSE_DATE('%Y%m%d', event_date) as event_date,
-        EXTRACT(YEAR FROM PARSE_DATE('%Y%m%d', event_date)) as year,
-        EXTRACT(MONTH FROM PARSE_DATE('%Y%m%d', event_date)) as month,
-        EXTRACT(DAY FROM PARSE_DATE('%Y%m%d', event_date)) as day,
+        event_date,
+        EXTRACT(YEAR FROM event_date) as year,
+        EXTRACT(MONTH FROM event_date) as month,
+        EXTRACT(DAY FROM event_date) as day,
         event_timestamp,
         user_first_touch_timestamp,
         event_previous_timestamp,

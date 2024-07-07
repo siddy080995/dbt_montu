@@ -15,12 +15,15 @@ with stg_source as (
 source_data as (
     select 
         user_pseudo_id,
-        event_date,
+        PARSE_DATE('%Y%m%d', event_date) as event_date,
         event_timestamp,
         event_previous_timestamp,
         cast(event_name AS STRING) AS event_name,
         user_first_touch_timestamp,
-        device.category as device_category,
+        case
+            when lower(device.category) in ('desktop', 'mobile', 'tablet') then lower(device.category)
+            else 'unknown'
+        end as device_category,
         geo.country,
         geo.region,
         geo.city,
@@ -29,6 +32,8 @@ source_data as (
         traffic_source.name,
         concat(user_pseudo_id, event_timestamp) as session_id  -- unique key session_id by concatenating user_pseudo_id and event_timestamp
     from stg_source
+    where user_pseudo_id is not null  -- filtering out rows with null user_pseudo_id
+        and event_timestamp is not null  -- filtering out rows with null event_timestamp
 )
 -- Displaying the source data
 select * from source_data
