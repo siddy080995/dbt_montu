@@ -81,7 +81,7 @@ search_sessions as (
     where CAST(event_name AS STRING) = 'view_search_results'
     group by event_date, country, name, device_category
 )
-,-- session durations
+,-- session duration for each unique session
 session_durations as (
     select
         event_date,
