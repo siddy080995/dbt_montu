@@ -1,5 +1,3 @@
-
-
 -- Define the model configuration
 {{ config(
     materialized='table'
@@ -107,7 +105,7 @@ average_session_duration as (
     from session_durations
     group by event_date, country, name, device_category
 )
--- Final select to aggregate all metrics by date, country, name and device category
+--Final select to aggregate all metrics by date, country, name and device category
 select
     ts.event_date,
     ts.country,
